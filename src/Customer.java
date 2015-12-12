@@ -17,9 +17,12 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextPane;
 
-public class Customer extends JFrame{
+public class Customer extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTextField txtAmount;
 
@@ -31,7 +34,7 @@ public class Customer extends JFrame{
 	
 	public int numOfOrders = 100;
 	public MoneyOrder[] moneyOrderArray = null;
-//	public double moneyOrderValue = null;
+	public double moneyOrderValue = 0.0;
 	public static String combinedIdentityString = "";
 	public static String binaryIdentityString = "";
 	public static String randomKeyL = "";
@@ -80,9 +83,12 @@ public class Customer extends JFrame{
 		contentPane.add(textPane);		
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(this);
+		btnSubmit.setActionCommand("Submit");
 		contentPane.add(btnSubmit);
-		
+
 	}
+	
 	
 	public MoneyOrder[] createMoneyOrderArray(double valueMO){
 		moneyOrderArray = new MoneyOrder[numOfOrders];
@@ -106,6 +112,46 @@ public class Customer extends JFrame{
 	
 	public String getIDKeyR(){
 		return identityKeyR;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("Submit")) {
+
+//		if ((txtAmount.getText() != null && !txtAmount.getText().isEmpty())){
+			moneyOrderValue = Double.valueOf(txtAmount.getText());
+//		}
+		System.out.println(moneyOrderValue);
+
+		Customer bob = new Customer();
+
+		bob.createMoneyOrderArray(moneyOrderValue);
+		
+		System.out.println("The ID string that identifies the Customer is: " + bob.getIDString());
+		System.out.println("The binary string that identifies the Customer is: " + bob.getBinaryIDString());
+		System.out.println("The random binary string L is: " + bob.getIDKeyL());
+		System.out.println("The binary string R is: " + bob.getIDKeyR());
+		
+//		System.out.println("\nThe ID string on the money order is: " + example.getID());
+
+		System.out.println("\nNow, the bank must verify all but one money order and sign the remaining order.");
+		
+		Bank authority = new Bank (bob.moneyOrderArray);
+		
+		System.out.println("The MO selector number is: " + authority.getRandomSelector());
+		System.out.println("Matching money order values? " + authority.checkValue());
+		System.out.println("Money Order unique? " + authority.checkUniqueness());
+		System.out.println("Money order stored in records? " + authority.storeUniqueness());
+		System.out.println("Money order signed by bank? " + authority.signMoneyOrder());
+		
+		
+		System.out.println("\nNow, it's time for the merchant to verify the money order.");
+		
+		Merchant store = new Merchant(authority.moneyOrderArrayFromCustomer[authority.moneyOrderSelector]);
+		
+		System.out.println("Is the money order signed by the bank? " + store.isSignedByBank());
+		store.revealIdentityHalf();
+		}
 	}
 		
 }
