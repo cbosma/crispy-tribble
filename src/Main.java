@@ -1,8 +1,29 @@
+import java.awt.EventQueue;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Main {
 	
 	public static void main(String[] args){
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Customer cframe = new Customer();
+					Merchant mframe = new Merchant(null);
+					Bank bframe = new Bank(null);
+					//Bank frame = new Bank();
+					cframe.setVisible(true);
+					mframe.setVisible(true);
+					bframe.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		
 		Customer bob = new Customer();
 		
@@ -44,19 +65,50 @@ public class Main {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private static void bankGUI() {
+		//Create and set up the window.
+        JFrame frame = new JFrame("Bank");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Add the Customer ID label.
+        JLabel label = new JLabel("Bank");
+        frame.getContentPane().add(label);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+		
+	}
+
+	private static void merchantGUI() {
+		//Create and set up the window.
+        JFrame frame = new JFrame("Merchant");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Add the Customer ID label.
+        JLabel label = new JLabel("Merchant ID");
+        frame.getContentPane().add(label);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+		
+	}
 }
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

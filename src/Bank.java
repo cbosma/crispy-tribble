@@ -1,7 +1,33 @@
+import java.awt.GridLayout;
 import java.util.Random;
 //testpush
 
-public class Bank {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.GridLayout;
+import javax.swing.JTextPane;
+
+public class Bank extends JFrame {
+	
+	private JPanel contentPane;
+	private JTextField txtAmount;
 	
 	public MoneyOrder[] moneyOrderArrayFromCustomer = null;
 	public String[][] uniqueness = new String[100][3];
@@ -18,6 +44,43 @@ public class Bank {
 		
 		Random randomSelector = new Random();
         moneyOrderSelector = randomSelector.nextInt(100);
+        
+        
+        
+        
+        setTitle("Bank");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(3, 2));		
+			
+		JLabel lblMonmon = new JLabel("Transaction Amount");
+		lblMonmon.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMonmon.setSize(300, 100);
+		contentPane.add(lblMonmon);
+		
+		JTextPane textTranactionAmoutn = new JTextPane();
+		contentPane.add(textTranactionAmoutn);	
+		
+		JLabel lblTrustCustomer = new JLabel("Trusted Customer");
+		lblTrustCustomer.setSize(300, 100);
+		contentPane.add(lblTrustCustomer);
+		
+		JTextPane textTrustCustomer = new JTextPane();
+		contentPane.add(textTrustCustomer);
+		
+		JLabel lblTrustMerchant = new JLabel("Trusted Merchant");
+		lblTrustCustomer.setSize(300, 100);
+		contentPane.add(lblTrustMerchant);
+		
+		JTextPane textTrustMerchant = new JTextPane();
+		contentPane.add(textTrustMerchant);		
+		
+		
+		
+		
 	}
 	
 	public boolean checkValue(){
