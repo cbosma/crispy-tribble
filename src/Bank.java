@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -23,67 +24,87 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Bank extends JFrame {
 	
 	private JPanel contentPane;
 	private JTextField txtAmount;
+	JTextArea textTrustMerchant;
 	
-	public MoneyOrder[] moneyOrderArrayFromCustomer = null;
+	public static MoneyOrder[] moneyOrderArrayFromCustomer = null;
 	public String[][] uniqueness = new String[100][3];
-	public double moneyOrderValue;
-	public boolean matchingAmounts = true;
+	public static double moneyOrderValue = 0;
+	public static boolean matchingAmounts = true;
 	public boolean isUnique;
-	public int moneyOrderSelector;
+	public static int moneyOrderSelector = 0;
 	private String signature = "1234567890ABCDEFG";
 	
 	
-	public Bank(MoneyOrder[] moneyOrderArray){
+	
+	public Bank(final Customer cust){
 		
-		moneyOrderArrayFromCustomer = moneyOrderArray;
 		
 		Random randomSelector = new Random();
-        moneyOrderSelector = randomSelector.nextInt(100);
-        
-        
-        
-        
+        moneyOrderSelector = randomSelector.nextInt(100);      
         setTitle("Bank");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 600, 590, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(3, 2));		
-			
+		contentPane.setLayout(null);
 		JLabel lblMonmon = new JLabel("Transaction Amount");
+		lblMonmon.setLocation(5, 5);
 		lblMonmon.setHorizontalAlignment(SwingConstants.LEFT);
-		lblMonmon.setSize(300, 100);
-		contentPane.add(lblMonmon);
-		
-		JTextPane textTranactionAmoutn = new JTextPane();
-		contentPane.add(textTranactionAmoutn);	
-		
+		lblMonmon.setSize(148, 89);
+		contentPane.add(lblMonmon);		
+		final JTextArea textTranactionAmoutn = new JTextArea();
+		textTranactionAmoutn.setBounds(295, 5, 290, 89);
+		contentPane.add(textTranactionAmoutn);			
 		JLabel lblTrustCustomer = new JLabel("Trusted Customer");
-		lblTrustCustomer.setSize(300, 100);
-		contentPane.add(lblTrustCustomer);
-		
-		JTextPane textTrustCustomer = new JTextPane();
-		contentPane.add(textTrustCustomer);
-		
+		lblTrustCustomer.setLocation(5, 94);
+		lblTrustCustomer.setSize(148, 100);
+		contentPane.add(lblTrustCustomer);		
 		JLabel lblTrustMerchant = new JLabel("Trusted Merchant");
-		lblTrustCustomer.setSize(300, 100);
-		contentPane.add(lblTrustMerchant);
+		lblTrustMerchant.setBounds(5, 183, 148, 89);		
+		final JTextArea textTrustCustomer = new JTextArea();
+		textTrustCustomer.setBounds(295, 94, 290, 89);
+		contentPane.add(textTrustCustomer);		
 		
-		JTextPane textTrustMerchant = new JTextPane();
+		contentPane.add(lblTrustMerchant);		
+		
+		textTrustMerchant = new JTextArea();
+		textTrustMerchant.setBounds(295, 183, 290, 89);
+		textTrustMerchant.setText(" ");
 		contentPane.add(textTrustMerchant);		
-		
-		
-		
+		JButton btnCheckForMoney = new JButton("Process Transactions");
+
+		btnCheckForMoney.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				moneyOrderArrayFromCustomer = cust.returnMO();
+				textTranactionAmoutn.setText("Now, the bank must verify all but one \n money order and sign the remaining order.\n" +
+						"The MO selector number is: " + getRandomSelector() + "\n");
+						
+				textTrustCustomer.setText(
+						"Matching money order values? " + checkValue() + "\n" +
+						"Money order stored in records? " + storeUniqueness() + "\n" +
+						"Money Order unique? " + checkUniqueness()+ "\n" + 
+						"Money order signed by bank? " + signMoneyOrder());
+						cust.signedText.setText("Money Order Signed By Bank!");
+			}
+		});
+		btnCheckForMoney.setBounds(132, 233, 157, 39);
+		contentPane.add(btnCheckForMoney);
 		
 	}
 	
-	public boolean checkValue(){
+	public MoneyOrder returnMO(){
+		return moneyOrderArrayFromCustomer[moneyOrderSelector];
+	}
+	
+	public static boolean checkValue(){
 		moneyOrderValue = moneyOrderArrayFromCustomer[0].value;
 		int counter = 0;
 		while(matchingAmounts == true && counter < moneyOrderArrayFromCustomer.length){
@@ -93,6 +114,8 @@ public class Bank extends JFrame {
 		}
 		return matchingAmounts;
 	}
+	
+
 	
 	public boolean checkUniqueness(){
 		isUnique = true;
@@ -133,7 +156,4 @@ public class Bank extends JFrame {
 		}
 		return stored;
 	}
-	
-	
-
 }

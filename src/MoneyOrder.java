@@ -2,10 +2,10 @@ import java.util.UUID;
 
 public class MoneyOrder{
 	
-	public double value; //Value of the money order
+	public static double value; //Value of the money order
 	public String uniqueNumber; //Uniqueness string
-	public String customerIDLeft;
-	public String customerIDRight;
+	public static String customerIDLeft;
+	public static String customerIDRight;
 	public String bankSignature = "";
 	
 	
@@ -16,8 +16,12 @@ public class MoneyOrder{
 		customerIDRight = IDRight;
 	}
 	
-	public double getValue() {
+	public static double getValue() {
 		return value;
+		}
+	
+	public static String getValueString() {
+		return  String.valueOf(value);
 		}
 
 	public String getUniqueNumber() {

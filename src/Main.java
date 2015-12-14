@@ -12,8 +12,8 @@ public class Main {
 			public void run() {
 				try {
 					Customer cframe = new Customer();
-					Merchant mframe = new Merchant(null);
-					Bank bframe = new Bank(null);
+					Bank bframe = new Bank(cframe);
+					Merchant mframe = new Merchant(bframe,cframe);
 					//Bank frame = new Bank();
 					cframe.setVisible(true);
 					mframe.setVisible(true);
@@ -24,8 +24,10 @@ public class Main {
 			}
 		});		
 		
-		System.out.println("First, the Customer must create a money order.\n"
-				+ "Please enter the value of the money order.");
+		
+		
+		//System.out.println("First, the Customer must create a money order.\n"
+		//		+ "Please enter the value of the money order.");
 
 	}
 }

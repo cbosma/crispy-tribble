@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
@@ -26,22 +27,24 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Merchant extends JFrame{
 	private String bankSignature = "1234567890ABCDEFG";
 	public MoneyOrder moneyOrderFromBank = null;
 	private JPanel contentPane;
-	private JTextField txtAmount;
+	private JTextArea txtAmount;
 	
 	
 	
-	public Merchant(MoneyOrder incomingMoneyOrder){
-		moneyOrderFromBank = incomingMoneyOrder;
+	public Merchant(final Bank bank, final Customer cust){
+		
 		
 		setTitle("Merchant");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(50, 50, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -52,7 +55,7 @@ public class Merchant extends JFrame{
 		lblMonmon.setSize(300, 100);
 		contentPane.add(lblMonmon);
 		
-		txtAmount = new JTextField();
+		txtAmount = new JTextArea();
 		txtAmount.setText("Amount");
 		txtAmount.setSize(300, 100);
 		contentPane.add(txtAmount);
@@ -62,11 +65,29 @@ public class Merchant extends JFrame{
 		lblBankApproved.setSize(300, 100);
 		contentPane.add(lblBankApproved);
 		
-		JTextPane textPane = new JTextPane();
-		contentPane.add(textPane);		
+		final JTextArea textArea = new JTextArea();
+		contentPane.add(textArea);		
 		
 		JButton btnSubmit = new JButton("Ship Merchadise");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cust.signedText.setText("Order Recieved by Merchant!");
+				bank.textTrustMerchant.setText("Merchant Verified, Order Fulfiled");
+			}
+		});
 		contentPane.add(btnSubmit);
+		
+		JButton btnCheckOrders = new JButton("Check Orders");
+		btnCheckOrders.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				moneyOrderFromBank = bank.returnMO();
+				txtAmount.setText(bank.returnMO().getValueString());
+				textArea.setText("Is the money order signed by the bank? " + isSignedByBank() + " \n" +
+				(revealIdentityHalf()));
+				
+			}
+		});
+		contentPane.add(btnCheckOrders);
 		
 	}
 	
@@ -77,12 +98,15 @@ public class Merchant extends JFrame{
 		return false;
 	}
 	
-	public void revealIdentityHalf(){
+	public String revealIdentityHalf(){
+		String S;
 		if (selectorInt() == 0){
-			System.out.println("The left identity is: " + moneyOrderFromBank.customerIDLeft);
+			
+			 S = "The left identity is: " + moneyOrderFromBank.customerIDLeft;
 		}
 		else
-			System.out.println("The right identity is " + moneyOrderFromBank.customerIDRight);
+			S = "The right identity is " + moneyOrderFromBank.customerIDRight;
+		return S;
 	}
 	
 	public int selectorInt(){
