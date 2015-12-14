@@ -26,6 +26,7 @@ import java.awt.GridLayout;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class Bank extends JFrame {
 	
@@ -60,25 +61,34 @@ public class Bank extends JFrame {
 		lblMonmon.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMonmon.setSize(148, 89);
 		contentPane.add(lblMonmon);		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(295, 5, 290, 89);
+		contentPane.add(scrollPane);
 		final JTextArea textTranactionAmoutn = new JTextArea();
-		textTranactionAmoutn.setBounds(295, 5, 290, 89);
-		contentPane.add(textTranactionAmoutn);			
+		scrollPane.setViewportView(textTranactionAmoutn);
 		JLabel lblTrustCustomer = new JLabel("Trusted Customer");
 		lblTrustCustomer.setLocation(5, 94);
 		lblTrustCustomer.setSize(148, 100);
 		contentPane.add(lblTrustCustomer);		
 		JLabel lblTrustMerchant = new JLabel("Trusted Merchant");
 		lblTrustMerchant.setBounds(5, 183, 148, 89);		
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(295, 94, 290, 89);
+		contentPane.add(scrollPane_1);
 		final JTextArea textTrustCustomer = new JTextArea();
-		textTrustCustomer.setBounds(295, 94, 290, 89);
-		contentPane.add(textTrustCustomer);		
+		scrollPane_1.setViewportView(textTrustCustomer);
 		
 		contentPane.add(lblTrustMerchant);		
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(295, 183, 290, 89);
+		contentPane.add(scrollPane_2);
+		
 		textTrustMerchant = new JTextArea();
-		textTrustMerchant.setBounds(295, 183, 290, 89);
+		scrollPane_2.setViewportView(textTrustMerchant);
 		textTrustMerchant.setText(" ");
-		contentPane.add(textTrustMerchant);		
 		JButton btnCheckForMoney = new JButton("Process Transactions");
 
 		btnCheckForMoney.addActionListener(new ActionListener() {

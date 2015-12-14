@@ -29,6 +29,7 @@ import java.awt.GridLayout;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 
 public class Merchant extends JFrame{
@@ -55,18 +56,24 @@ public class Merchant extends JFrame{
 		lblMonmon.setSize(300, 100);
 		contentPane.add(lblMonmon);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		contentPane.add(scrollPane);
+		
 		txtAmount = new JTextArea();
+		scrollPane.setViewportView(txtAmount);
 		txtAmount.setText("Amount");
 		txtAmount.setSize(300, 100);
-		contentPane.add(txtAmount);
 		txtAmount.setColumns(10);
 		
 		JLabel lblBankApproved = new JLabel("Bank Approved");
 		lblBankApproved.setSize(300, 100);
 		contentPane.add(lblBankApproved);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		contentPane.add(scrollPane_1);
+		
 		final JTextArea textArea = new JTextArea();
-		contentPane.add(textArea);		
+		scrollPane_1.setViewportView(textArea);
 		
 		JButton btnSubmit = new JButton("Ship Merchadise");
 		btnSubmit.addActionListener(new ActionListener() {
